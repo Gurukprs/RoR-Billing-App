@@ -1,0 +1,26 @@
+<%= form_with model: [:admin, @product] do |f| %>
+  <% if @product.errors.any? %>
+    <ul>
+      <% @product.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :price %>
+    <%= f.number_field :price, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.label :tax_percentage %>
+    <%= f.number_field :tax_percentage, step: 0.01 %>
+  </div>
+
+  <%= f.submit %>
+<% end %>
