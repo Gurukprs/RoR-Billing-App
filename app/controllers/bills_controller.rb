@@ -5,15 +5,17 @@ class BillsController < ApplicationController
     @bill = Bill.new
     @bill.bill_items.build
     @products = Product.all
+    @denominations = [500, 200, 100, 50, 20, 10]
   end
 
   def create
     @bill = Bill.new(bill_params)
     build_bill_items
     
+    @products = Product.all
+    
     if @bill.bill_items.empty?
       flash.now[:alert] = "Please add at least one product"
-      @products = Product.all
       render :new and return
     end
     @bill.calculate_totals
@@ -21,7 +23,6 @@ class BillsController < ApplicationController
     if @bill.save
       redirect_to @bill, notice: "Bill generated successfully"
     else
-      @products = Product.all
       render :new
     end
   end

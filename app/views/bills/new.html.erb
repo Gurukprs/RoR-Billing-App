@@ -3,4 +3,68 @@
 <%= link_to "Logout", destroy_user_session_path, method: :delete %>
 
 <p>Welcome to the billing application. This is the bills creation page.</p>
+<h1>Bill Calculator</h1>
 
+<%= form_with model: @bill, local: true do |f| %>
+
+  <fieldset>
+    <legend>Customer Details</legend>
+
+    <div>
+      <%= f.label :customer_email %><br>
+      <%= f.email_field :customer_email, required: true %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Products</legend>
+
+    <div id="products">
+      <%= f.fields_for :bill_items do |item_fields| %>
+        <div class="product-row">
+          <div>
+            <%= item_fields.label :product_id, "Product" %><br>
+            <%= item_fields.select :product_id,
+                  options_from_collection_for_select(@products, :id, :name),
+                  prompt: "Select product" %>
+          </div>
+
+          <div>
+            <%= item_fields.label :quantity %><br>
+            <%= item_fields.number_field :quantity, min: 1 %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <p><em>More products can be added (next step)</em></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Denominations</legend>
+
+    <% @denominations.each do |value| %>
+      <div>
+        <label><%= value %></label>
+        <%= number_field_tag "denominations[#{value}]",
+                             nil,
+                             min: 0,
+                             step: 1 %>
+      </div>
+    <% end %>
+  </fieldset>
+
+    <fieldset>
+    <legend>Payment</legend>
+
+    <div>
+      <%= f.label :cash_paid, "Cash Given by Customer" %><br>
+      <%= f.number_field :cash_paid, min: 0, step: 0.01 %>
+    </div>
+  </fieldset>
+
+  <div>
+    <%= f.submit "Generate Bill" %>
+  </div>
+
+<% end %>
