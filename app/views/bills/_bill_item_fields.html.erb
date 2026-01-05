@@ -1,0 +1,19 @@
+<div class="product-row">
+  <div>
+    <%= f.label :product_id, "Product" %><br>
+    <%= f.select :product_id,
+          options_from_collection_for_select(@products, :id, :name),
+          prompt: "Select product" %>
+  </div>
+
+  <div>
+    <%= f.label :quantity %><br>
+    <%= f.number_field :quantity, min: 1 %>
+  </div>
+
+  <div>
+    <button type="button" class="remove-product">Remove</button>
+  </div>
+
+  <hr>
+</div>

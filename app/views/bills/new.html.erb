@@ -33,24 +33,18 @@
 
     <div id="products">
       <%= f.fields_for :bill_items do |item_fields| %>
-        <div class="product-row">
-          <div>
-            <%= item_fields.label :product_id, "Product" %><br>
-            <%= item_fields.select :product_id,
-                  options_from_collection_for_select(@products, :id, :name),
-                  prompt: "Select product" %>
-          </div>
-
-          <div>
-            <%= item_fields.label :quantity %><br>
-            <%= item_fields.number_field :quantity, min: 1 %>
-          </div>
-        </div>
+        <%= render "bill_item_fields", f: item_fields %>
       <% end %>
     </div>
 
-    <p><em>More products can be added (next step)</em></p>
+    <button type="button" id="add-product">Add Product</button>
   </fieldset>
+
+  <div id="product-template" style="display:none;">
+    <%= f.fields_for :bill_items, BillItem.new, child_index: "NEW_RECORD" do |item_fields| %>
+      <%= render "bill_item_fields", f: item_fields %>
+    <% end %>
+  </div>
 
   <fieldset>
     <legend>Denominations</legend>
@@ -58,10 +52,7 @@
     <% @denominations.each do |value| %>
       <div>
         <label><%= value %></label>
-        <%= number_field_tag "denominations[#{value}]",
-                             nil,
-                             min: 0,
-                             step: 1 %>
+        <%= number_field_tag "denominations[#{value}]", nil, min: 0, step: 1 %>
       </div>
     <% end %>
   </fieldset>
