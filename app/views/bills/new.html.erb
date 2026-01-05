@@ -5,6 +5,18 @@
 <p>Welcome to the billing application. This is the bills creation page.</p>
 <h1>Bill Calculator</h1>
 
+<% if @bill.errors.any? %>
+  <div>
+    <h3>Errors:</h3>
+    <ul>
+      <% @bill.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
 <%= form_with model: @bill, local: true do |f| %>
 
   <fieldset>
