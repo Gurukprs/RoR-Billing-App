@@ -6,41 +6,15 @@
 </p>
 
 <p>
-  <strong>Cash Paid:</strong>
-  <%= @bill.cash_paid %>
+  <strong>Bill ID:</strong>
+  <%= @bill.id %>
 </p>
-
 <hr>
 
-<h2>Items</h2>
-
-<table border="1" cellpadding="5">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Qty</th>
-      <th>Unit Price</th>
-      <th>Tax</th>
-      <th>Total</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @bill_items.each do |item| %>
-      <tr>
-        <td><%= item.product.name %></td>
-        <td><%= item.quantity %></td>
-        <td><%= item.unit_price %></td>
-        <td><%= item.tax_amount %></td>
-        <td><%= item.total_price %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<%= render "bill_items_table" %>
 <hr>
 
-<p><strong>Total (without tax):</strong> <%= @bill.total_without_tax %></p>
-<p><strong>Total Tax:</strong> <%= @bill.total_tax %></p>
-<p><strong>Net Total:</strong> <%= @bill.net_total %></p>
-<p><strong>Rounded Total:</strong> <%= @bill.rounded_total %></p>
-<p><strong>Balance Payable:</strong> <%= @bill.balance_payable %></p>
+<h3>Summary</h3>
+<%= render "bill_summary" %>
+<hr>
+<%= link_to "Generate New Bill", root_path %>
