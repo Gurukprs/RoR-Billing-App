@@ -37,6 +37,7 @@ class BillsController < ApplicationController
 
   def show
     @bill_items = @bill.bill_items.includes(:product)
+    @balance_denominations = @bill.balance_denominations
   end
 
   private

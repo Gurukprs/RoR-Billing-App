@@ -1,0 +1,20 @@
+<% if @balance_denominations.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Denomination</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @balance_denominations.each do |value, count| %>
+        <tr>
+          <td><%= value %></td>
+          <td><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No balance to return.</p>
+<% end %>

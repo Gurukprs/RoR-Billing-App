@@ -1,6 +1,7 @@
 class Bill < ApplicationRecord
   has_many :bill_items, dependent: :destroy
   has_many :products, through: :bill_items
+  DENOMINATIONS = [500, 200, 100, 50, 20, 10].freeze
 
   accepts_nested_attributes_for :bill_items, allow_destroy: true
 # Validations
@@ -36,5 +37,20 @@ class Bill < ApplicationRecord
   def calculated_balance_payable
     return nil unless cash_paid
     cash_paid - calculated_rounded_total
+  end
+  
+  def balance_denominations
+    balance = calculated_balance_payable
+    return {} if balance.nil? || balance <= 0
+    remaining = balance.to_i
+    breakup = {}
+    DENOMINATIONS.each do |value|
+      count = remaining / value
+      if count > 0
+        breakup[value] = count
+        remaining = remaining % value
+      end
+    end
+    breakup
   end
 end
