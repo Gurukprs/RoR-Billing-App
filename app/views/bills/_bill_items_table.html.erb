@@ -1,25 +1,28 @@
-<table border="1" cellpadding="8" cellspacing="0">
-  <thead>
-    <tr>
-      <th>Product</th>
-      <th>Qty</th>
-      <th>Unit Price</th>
-      <th>Purchased Price</th>
-      <th>Tax</th>
-      <th>Total (Incl. Tax)</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @bill_items.each do |item| %>
+<div class="table-responsive">
+  <table class="table table-bordered align-middle mb-0 bill-items-table">
+    <thead class="table-light">
       <tr>
-        <td><%= item.product.name %></td>
-        <td><%= item.quantity %></td>
-        <td><%= item.unit_price %></td>
-        <td><%= item.total_price %></td>
-        <td><%= item.tax_amount %></td>
-        <td><%= item.total_price + item.tax_amount %></td>
+        <th scope="col">Product ID</th>
+        <th scope="col">Unit Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Purchased Price</th>
+        <th scope="col">Tax % for Item</th>
+        <th scope="col">Tax Payable</th>
+        <th scope="col">Total Price</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @bill_items.each do |item| %>
+        <tr>
+          <td><%= item.product.name %></td>
+          <td><%= item.unit_price %></td>
+          <td><%= item.quantity %></td>
+          <td><%= item.total_price %></td>
+          <td><%= item.product.tax_percentage %></td>
+          <td><%= item.tax_amount %></td>
+          <td><%= item.total_price + item.tax_amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

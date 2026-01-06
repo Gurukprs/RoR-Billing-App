@@ -1,73 +1,97 @@
-<h1>New Bill</h1>
-
-<%= link_to "Admin Login", new_user_session_path%>
-
-<p>Welcome to the billing application. This is the bills creation page.</p>
-<h1>Bill Calculator</h1>
-
-<% if @bill.errors.any? %>
-  <div>
-    <h3>Errors:</h3>
-    <ul>
-      <% @bill.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
-
-
-<%= form_with model: @bill, local: true do |f| %>
-
-  <fieldset>
-    <legend>Customer Details</legend>
-
-    <div>
-      <%= f.label :customer_email %><br>
-      <%= f.email_field :customer_email, required: true %>
-    </div>
-  </fieldset>
-
-  <fieldset>
-    <legend>Products</legend>
-
-    <div id="products">
-      <%= f.fields_for :bill_items do |item_fields| %>
-        <%= render "bill_item_fields", f: item_fields %>
-      <% end %>
-    </div>
-
-    <button type="button" id="add-product">Add Product</button>
-  </fieldset>
-
-  <div id="product-template" style="display:none;">
-    <%= f.fields_for :bill_items, BillItem.new, child_index: "NEW_RECORD" do |item_fields| %>
-      <%= render "bill_item_fields", f: item_fields %>
-    <% end %>
-  </div>
-
-  <fieldset>
-    <legend>Denominations</legend>
-
-    <% @denominations.each do |value| %>
-      <div>
-        <label><%= value %></label>
-        <%= number_field_tag "denominations[#{value}]", nil, min: 0, step: 1 %>
+<div class="billing-shell mx-auto">
+  <div class="card billing-card border-0 shadow-sm">
+    <div class="card-body p-4 p-md-5">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-2">
+        <div>
+          <p class="section-eyebrow text-uppercase mb-1">Billing System</p>
+          <h1 class="fw-bold text-dark mb-0">Bill Calculator</h1>
+        </div>
+        <%= link_to "Admin Login", new_user_session_path, class: "btn btn-outline-secondary btn-sm" %>
       </div>
-    <% end %>
-  </fieldset>
+      <p class="text-muted mb-4">Welcome to the billing application. Please enter the purchase details below to generate a bill.</p>
 
-    <fieldset>
-    <legend>Payment</legend>
+      <% if @bill.errors.any? %>
+        <div class="alert alert-danger shadow-sm">
+          <div class="fw-semibold mb-2">Please fix the following:</div>
+          <ul class="mb-0 ps-3">
+            <% @bill.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-    <div>
-      <%= f.label :cash_paid, "Cash Given by Customer" %><br>
-      <%= f.number_field :cash_paid, min: 0, step: 0.01 %>
+      <%= form_with model: @bill, local: true, html: { class: "billing-form" } do |f| %>
+
+        <div class="section-card mb-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div>
+              <p class="section-eyebrow text-uppercase mb-1">Customer Details</p>
+              <h5 class="mb-0 fw-semibold text-dark">Customer Email</h5>
+            </div>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <%= f.label :customer_email, "Customer Email", class: "form-label text-muted small fw-semibold" %>
+              <%= f.email_field :customer_email, required: true, class: "form-control form-control-lg shadow-none", placeholder: "Enter Email Address" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card mb-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div>
+              <p class="section-eyebrow text-uppercase mb-1">Bill Section</p>
+              <h5 class="mb-0 fw-semibold text-dark">Products</h5>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm px-3" id="add-product">Add New</button>
+          </div>
+
+          <div id="products" class="product-stack">
+            <%= f.fields_for :bill_items do |item_fields| %>
+              <%= render "bill_item_fields", f: item_fields %>
+            <% end %>
+          </div>
+
+          <div id="product-template" class="d-none">
+            <%= f.fields_for :bill_items, BillItem.new, child_index: "NEW_RECORD" do |item_fields| %>
+              <%= render "bill_item_fields", f: item_fields %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="section-card mb-4">
+          <p class="section-eyebrow text-uppercase mb-1">Denominations</p>
+          <h5 class="mb-3 fw-semibold text-dark">Enter quantity for each denomination</h5>
+          <div class="row g-3">
+            <% @denominations.each do |value| %>
+              <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="d-flex align-items-center gap-2 denomination-input">
+                  <span class="denomination-badge"><%= value %></span>
+                  <%= number_field_tag "denominations[#{value}]", nil, min: 0, step: 1, class: "form-control shadow-none", placeholder: "Quantity" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="section-card mb-3">
+          <p class="section-eyebrow text-uppercase mb-1">Payment</p>
+          <h5 class="mb-3 fw-semibold text-dark">Cash Paid by Customer</h5>
+          <div class="row g-3 align-items-center">
+            <div class="col-md-6">
+              <%= f.label :cash_paid, "Amount", class: "form-label text-muted small fw-semibold" %>
+              <%= f.number_field :cash_paid, min: 0, step: 0.01, class: "form-control form-control-lg shadow-none", placeholder: "Amount" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-end gap-2">
+          <%= link_to "Cancel", root_path, class: "btn btn-outline-secondary px-4" %>
+          <%= f.submit "Generate Bill", class: "btn btn-primary px-4" %>
+        </div>
+
+      <% end %>
     </div>
-  </fieldset>
-
-  <div>
-    <%= f.submit "Generate Bill" %>
   </div>
-
-<% end %>
+</div>

@@ -1,24 +1,42 @@
-<h1>Bill Summary</h1>
+<div class="billing-shell mx-auto">
+  <div class="card billing-card border-0 shadow-sm">
+    <div class="card-body p-4 p-md-5">
+      <p class="section-eyebrow text-uppercase mb-1">Billing System</p>
+      <h2 class="fw-bold text-dark">Bill Summary</h2>
 
-<p>
-  <strong>Customer Email:</strong>
-  <%= @bill.customer_email %>
-</p>
+      <div class="d-flex flex-wrap align-items-center gap-4 mb-4">
+        <div>
+          <p class="text-muted mb-1 small fw-semibold">Customer Email</p>
+          <div class="fw-semibold text-dark"><%= @bill.customer_email %></div>
+        </div>
+        <div>
+          <p class="text-muted mb-1 small fw-semibold">Bill ID</p>
+          <div class="fw-semibold text-dark"><%= @bill.id %></div>
+        </div>
+      </div>
 
-<p>
-  <strong>Bill ID:</strong>
-  <%= @bill.id %>
-</p>
-<hr>
+      <div class="section-card mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-semibold text-dark mb-0">Bill Section</h5>
+        </div>
+        <%= render "bill_items_table" %>
+      </div>
 
-<%= render "bill_items_table" %>
-<hr>
+      <div class="section-card mb-4">
+        <h5 class="fw-semibold text-dark mb-3">Balance Denominations</h5>
+        <%= render "denomination_breakdown", bill: @bill %>
+      </div>
 
-<h3>Balance Denomination Breakdown</h3>
-<%= render "denomination_breakdown", bill: @bill %>
-<hr>
+      <div class="section-card mb-4">
+        <div class="d-flex flex-wrap justify-content-between gap-3 align-items-start">
+          <h5 class="fw-semibold text-dark mb-0">Summary</h5>
+          <%= render "bill_summary" %>
+        </div>
+      </div>
 
-<h3>Summary</h3>
-<%= render "bill_summary" %>
-<hr>
-<%= link_to "Generate New Bill", root_path %>
+      <div class="text-end">
+        <%= link_to "Generate New Bill", root_path, class: "btn btn-primary px-4" %>
+      </div>
+    </div>
+  </div>
+</div>

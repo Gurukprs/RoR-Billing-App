@@ -1,31 +1,26 @@
-<table>
+<table class="table table-borderless w-auto summary-table ms-auto mb-0">
   <tr>
-    <td>Total (Without Tax)</td>
-    <td><%= @bill.calculated_total_without_tax %></td>
+    <td class="text-muted">Total price without tax:</td>
+    <td class="text-end fw-semibold"><%= @bill.calculated_total_without_tax %></td>
   </tr>
-
   <tr>
-    <td>Total Tax</td>
-    <td><%= @bill.calculated_total_tax %></td>
+    <td class="text-muted">Total tax payable:</td>
+    <td class="text-end fw-semibold"><%= @bill.calculated_total_tax %></td>
   </tr>
-
   <tr>
-    <td>Net Total</td>
-    <td><%= @bill.calculated_net_total %></td>
+    <td class="text-muted">Net price of the purchased items:</td>
+    <td class="text-end fw-semibold"><%= @bill.calculated_net_total %></td>
   </tr>
-
-  <tr>
-    <td><strong>Rounded Total</strong></td>
-    <td><strong><%= @bill.calculated_rounded_total %></strong></td>
+  <tr class="table-light">
+    <td class="fw-semibold">Rounded down value of the purchased items net price:</td>
+    <td class="text-end fw-semibold"><%= @bill.calculated_rounded_total %></td>
   </tr>
-
   <tr>
-    <td>Cash Paid</td>
-    <td><%= @bill.cash_paid %></td>
+    <td class="text-muted">Cash paid by customer:</td>
+    <td class="text-end fw-semibold"><%= @bill.cash_paid %></td>
   </tr>
-
-  <tr>
-    <td><strong>Balance Payable</strong></td>
-    <td><strong><%= @bill.calculated_balance_payable %></strong></td>
+  <tr class="table-light">
+    <td class="fw-semibold">Balance payable to the customer:</td>
+    <td class="text-end fw-bold text-primary"><%= @bill.calculated_balance_payable %></td>
   </tr>
 </table>
