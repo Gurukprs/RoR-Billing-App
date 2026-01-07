@@ -1,26 +1,31 @@
-<%= form_with model: [:admin, @product] do |f| %>
+<%= form_with model: [:admin, @product], local: true do |f| %>
   <% if @product.errors.any? %>
-    <ul>
-      <% @product.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
+    <div class="alert alert-danger mb-4">
+      <ul class="mb-0">
+        <% @product.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
 
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+  <div class="mb-3">
+    <%= f.label :name, class: "form-label" %>
+    <%= f.text_field :name, class: "form-control" %>
   </div>
 
-  <div>
-    <%= f.label :price %>
-    <%= f.number_field :price, step: 0.01 %>
+  <div class="mb-3">
+    <%= f.label :price, class: "form-label" %>
+    <%= f.number_field :price, step: 0.01, class: "form-control" %>
   </div>
 
-  <div>
-    <%= f.label :tax_percentage %>
-    <%= f.number_field :tax_percentage, step: 0.01 %>
+  <div class="mb-3">
+    <%= f.label :tax_percentage, class: "form-label" %>
+    <%= f.number_field :tax_percentage, step: 0.01, class: "form-control" %>
   </div>
 
-  <%= f.submit %>
+  <div class="d-flex gap-2">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", admin_products_path, class: "btn btn-secondary" %>
+  </div>
 <% end %>

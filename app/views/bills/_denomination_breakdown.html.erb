@@ -1,20 +1,14 @@
-<% if @balance_denominations.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Denomination</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @balance_denominations.each do |value, count| %>
-        <tr>
-          <td><%= value %></td>
-          <td><%= count %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>No balance to return.</p>
-<% end %>
+<% denomination_values = [500, 200, 100, 50, 20, 10] %>
+<div class="row g-3">
+  <% denomination_values.each do |value| %>
+    <% count = @balance_denominations[value].to_i %>
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="denomination-card d-flex align-items-center justify-content-between">
+        <span class="denomination-value"><%= value %></span>
+        <span class="denomination-count badge <%= count.positive? ? 'bg-primary' : 'bg-light text-muted' %>">
+          <%= count %>
+        </span>
+      </div>
+    </div>
+  <% end %>
+</div>
