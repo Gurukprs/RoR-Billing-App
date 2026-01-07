@@ -12,6 +12,14 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^5.2.7",
+    "style-loader": "^2.0.0",
+    "file-loader": "^6.2.0",
+    "url-loader": "^4.1.1",
     "webpack-dev-server": "3"
   }
 }
