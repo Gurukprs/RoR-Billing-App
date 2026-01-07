@@ -1,0 +1,24 @@
+<h1>Bill Summary</h1>
+
+<p>
+  <strong>Customer Email:</strong>
+  <%= @bill.customer_email %>
+</p>
+
+<p>
+  <strong>Bill ID:</strong>
+  <%= @bill.id %>
+</p>
+<hr>
+
+<%= render "bill_items_table" %>
+<hr>
+
+<h3>Balance Denomination Breakdown</h3>
+<%= render "denomination_breakdown", bill: @bill %>
+<hr>
+
+<h3>Summary</h3>
+<%= render "bill_summary" %>
+<hr>
+<%= link_to "Generate New Bill", root_path %>

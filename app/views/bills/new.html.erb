@@ -1,6 +1,73 @@
 <h1>New Bill</h1>
 
-<%= link_to "Logout", destroy_user_session_path, method: :delete %>
+<%= link_to "Admin Login", new_user_session_path%>
 
 <p>Welcome to the billing application. This is the bills creation page.</p>
+<h1>Bill Calculator</h1>
 
+<% if @bill.errors.any? %>
+  <div>
+    <h3>Errors:</h3>
+    <ul>
+      <% @bill.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+<%= form_with model: @bill, local: true do |f| %>
+
+  <fieldset>
+    <legend>Customer Details</legend>
+
+    <div>
+      <%= f.label :customer_email %><br>
+      <%= f.email_field :customer_email, required: true %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Products</legend>
+
+    <div id="products">
+      <%= f.fields_for :bill_items do |item_fields| %>
+        <%= render "bill_item_fields", f: item_fields %>
+      <% end %>
+    </div>
+
+    <button type="button" id="add-product">Add Product</button>
+  </fieldset>
+
+  <div id="product-template" style="display:none;">
+    <%= f.fields_for :bill_items, BillItem.new, child_index: "NEW_RECORD" do |item_fields| %>
+      <%= render "bill_item_fields", f: item_fields %>
+    <% end %>
+  </div>
+
+  <fieldset>
+    <legend>Denominations</legend>
+
+    <% @denominations.each do |value| %>
+      <div>
+        <label><%= value %></label>
+        <%= number_field_tag "denominations[#{value}]", nil, min: 0, step: 1 %>
+      </div>
+    <% end %>
+  </fieldset>
+
+    <fieldset>
+    <legend>Payment</legend>
+
+    <div>
+      <%= f.label :cash_paid, "Cash Given by Customer" %><br>
+      <%= f.number_field :cash_paid, min: 0, step: 0.01 %>
+    </div>
+  </fieldset>
+
+  <div>
+    <%= f.submit "Generate Bill" %>
+  </div>
+
+<% end %>

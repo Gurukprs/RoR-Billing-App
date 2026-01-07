@@ -1,0 +1,25 @@
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Unit Price</th>
+      <th>Purchased Price</th>
+      <th>Tax</th>
+      <th>Total (Incl. Tax)</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @bill_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= item.quantity %></td>
+        <td><%= item.unit_price %></td>
+        <td><%= item.total_price %></td>
+        <td><%= item.tax_amount %></td>
+        <td><%= item.total_price + item.tax_amount %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

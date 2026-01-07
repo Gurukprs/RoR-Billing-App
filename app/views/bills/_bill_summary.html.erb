@@ -1,0 +1,31 @@
+<table>
+  <tr>
+    <td>Total (Without Tax)</td>
+    <td><%= @bill.calculated_total_without_tax %></td>
+  </tr>
+
+  <tr>
+    <td>Total Tax</td>
+    <td><%= @bill.calculated_total_tax %></td>
+  </tr>
+
+  <tr>
+    <td>Net Total</td>
+    <td><%= @bill.calculated_net_total %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Rounded Total</strong></td>
+    <td><strong><%= @bill.calculated_rounded_total %></strong></td>
+  </tr>
+
+  <tr>
+    <td>Cash Paid</td>
+    <td><%= @bill.cash_paid %></td>
+  </tr>
+
+  <tr>
+    <td><strong>Balance Payable</strong></td>
+    <td><strong><%= @bill.calculated_balance_payable %></strong></td>
+  </tr>
+</table>
