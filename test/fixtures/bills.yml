@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer_email: MyString
+  cash_paid: 9.99
+  total_without_tax: 9.99
+  total_tax: 9.99
+  net_total: 9.99
+  rounded_total: 9.99
+  balance_payable: 9.99
+  bill_items_count: 1
+
+two:
+  customer_email: MyString
+  cash_paid: 9.99
+  total_without_tax: 9.99
+  total_tax: 9.99
+  net_total: 9.99
+  rounded_total: 9.99
+  balance_payable: 9.99
+  bill_items_count: 1
